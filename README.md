@@ -10,7 +10,7 @@
 </h1>
 
 <h4 align="center">
-	Status 🚀 Finalizado  ☑️
+	Status 🚀 Em desenvolvimento  ☑️
 </h4>
 
 # Índice
