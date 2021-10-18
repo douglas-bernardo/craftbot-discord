@@ -25,7 +25,7 @@
 
 ---
 
-O **CRAFTBOT** é bot super esperto feito para o discord e que pode conversar com você sobre diversos assuntos, desde informações úteis como CEP, atualizações de dados da COVID e até mesmo te contar fatos interessantes sobre Chuck Norris.
+O **CRAFTBOT** é um bot super esperto feito para o discord, que pode conversar com você sobre diversos assuntos, desde informações úteis como CEP, atualizações de dados da COVID e até mesmo te contar fatos interessantes sobre Chuck Norris.
 
 &nbsp;
 
@@ -48,9 +48,9 @@ Jackson Douglas
 </h1>
 
 - !chucknorris tell me a fact -> Uma piada aleatória sobre Chuck Norris
-- !chucknorris categories -> A lista das categorias de piadas
-- !chucknorris tell me about categoryName -> Uma de acordo com a categoria escolhida
-- !chucknorris help -> Chuck Norris tentará te ajudar.
+- !chucknorris categories -> Lista as categorias de piadas
+- !chucknorris tell me about categoryName -> Uma piada de acordo com a categoria escolhida
+- !chucknorris help -> Chuck Norris tentará te ajudar
 
 &nbsp;
 
@@ -60,7 +60,7 @@ Jackson Douglas
     <img src="https://ik.imagekit.io/rcjzrqiiqm7/Screenshot_from_2021-10-18_18-04-44_n9YInIKft.png?updatedAt=1634591182052" width="200">
 </h1>
 
-- !covidcasos nome-do-estado -> Basta digitar o comando !covidcasos seguido no nome do seu estado sem acentos para obter as informações atualizadas da Covid 19.
+- !covidcasos nome-do-estado -> Basta digitar o comando !covidcasos seguido no nome do seu estado sem acentos para obter as informações atualizadas da Covid 19. Ex. !covidcasos Ceara.
 
 
 &nbsp;
@@ -71,4 +71,4 @@ Jackson Douglas
     <img src="https://ik.imagekit.io/rcjzrqiiqm7/Screenshot_from_2021-10-18_18-13-07_-p6xuuqIP.png?updatedAt=1634591617073" width="200">
 </h1>
 
-- !viacep numero-cep -> Basta digitar o comando !covidcasos seguido do CEP que deseja saber informações para obter os dados do mesmo.
+- !viacep numero-cep -> Basta digitar o comando !covidcasos seguido do CEP que deseja saber informações para obter os dados do mesmo. Ex. !viacep 60741000
