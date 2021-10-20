@@ -9,7 +9,6 @@ defmodule Craftbot.Consumer do
 
   def handle_event({:MESSAGE_CREATE, msg, _ws_state}) do
     cond do
-
       msg.content == "!chucknorris" ->
         Api.create_message(
           msg.channel_id,
@@ -28,6 +27,12 @@ defmodule Craftbot.Consumer do
           "CEP não encontrado ou comando inválido. Digite: >> !viacep numeroCEP << sem espaço e sem hífen"
         )
 
+      msg.content == "!procuradosFBI" ->
+        Api.create_message(
+          msg.channel_id,
+          "Uso do comando inválido. Digite: >> !procuradosFBI nome-completo << sem hífen"
+        )
+
       # chucknorris.io https://api.chucknorris.io/
       String.starts_with?(msg.content, "!chucknorris ") ->
         chuck_norris_facts(msg)
@@ -36,10 +41,17 @@ defmodule Craftbot.Consumer do
       String.starts_with?(msg.content, "!covidcasos ") ->
         covidcasos(msg)
 
+      # https://viacep.com.br/?ref=devresourc.es
       String.starts_with?(msg.content, "!viacep ") ->
         viacep(msg)
 
-      # https://viacep.com.br/?ref=devresourc.es
+      # https://api.vagalume.com.br/search.php?art=madonna&mus=holiday&apikey={6bd2da887a2897c79757b180ed6fb8d3}
+      String.starts_with?(msg.content, "!lyrics ") ->
+        artist(msg)
+
+      # https://www.receitaws.com.br/v1/cnpj/[cnpj]
+      String.starts_with?(msg.content, "!consultacnpj ") ->
+        consultacnpj(msg)
 
       true ->
         :ok
@@ -157,10 +169,52 @@ defmodule Craftbot.Consumer do
         localidade = json["localidade"]
         uf = json["uf"]
 
-        Api.create_message(msg.channel_id, "Logradouro #{logradouro}\nBairro #{logradouro}\nLocalidade #{localidade}\nEstado #{uf}\n")
+        Api.create_message(
+          msg.channel_id,
+          "Logradouro #{logradouro}\nBairro #{bairro}\nLocalidade #{localidade}\nEstado #{uf}\n"
+        )
 
       404 ->
         Api.create_message(msg.channel_id, "CEP não encontrado")
+    end
+  end
+
+  defp artist(msg) do
+    artist =
+      msg.content
+      |> String.split(" ", parts: 2)
+      |> Enum.fetch!(1)
+
+    response = HTTPoison.get!("https://api.vagalume.com.br/search.php?art=#{artist}&apikey={6bd2da887a2897c79757b180ed6fb8d3}")
+    json = Poison.decode!(response.body)
+
+     if json["type"] == "notfound" do
+      Api.create_message(msg.channel_id, "O artista não foi encontrado!")
+     else
+      artista = json["art"]["name"]
+      link = json["art"]["url"]
+      Api.create_message(msg.channel_id, "O link para a página de músicas da #{artista} é o seguinte #{link}")
+    end
+  end
+
+  defp consultacnpj(msg) do
+     cnpj =
+      msg.content
+      |> String.split(" ", parts: 2)
+      |> Enum.fetch!(1)
+
+    response = HTTPoison.get!("https://www.receitaws.com.br/v1/cnpj/#{cnpj}")
+
+    case response.status_code do
+      200 ->
+        json = Poison.decode!(response.body)
+        nome = json["nome"]
+        fantasia = json["fantasia"]
+        telefone = json["telefone"]
+        Api.create_message(msg.channel_id, "O CNPJ digitado pertence a #{nome} cujo nome fantasia é #{fantasia} e o telefone para contato é #{telefone}")
+
+      404 ->
+        Api.create_message(msg.channel_id, "Esse CNPJ não existe!")
     end
   end
 end

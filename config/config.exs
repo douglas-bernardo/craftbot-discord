@@ -1,4 +1,4 @@
 import Config
 
 config :nostrum,
-  token: "seu-token"
+  token: "token"
